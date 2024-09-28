@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/05 20:21:35 by yel-yaqi          #+#    #+#              #
-#    Updated: 2024/09/15 20:18:15 by mrezki           ###   ########.fr        #
+#    Created: 2024/09/28 22:20:35 by mrezki            #+#    #+#              #
+#    Updated: 2024/09/28 22:20:39 by mrezki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,12 @@ NEON			= \033[38;5;51m
 PURPLE			= \033[38;5;92;1m
 RESET			= \033[0m
 
-CFLAGS			= -Wall -Wextra -Werror -g -O1# -fPIE -fsanitize=thread
-# LDFLAGS			= -fsanitize=thread
+CFLAGS			= -Wall -Wextra -Werror -g -O1
 NAME			= philo
-SRCS		 	= src/main.c src/str_to_int.c src/process_input.c
+SRCS		 	= src/main.c src/str_to_int.c src/process_input.c \
+				  src/start_dining.c src/eat.c src/death_check.c \
+				  src/meals.c src/init_philos_data.c src/time.c \
+				  src/print.c
 OBJS		 	= $(SRCS:src/%.c=obj/%.o)
 HEADER 			= include/philosophers.h
 
@@ -45,7 +47,7 @@ obj/%.o: src/%.c $(HEADER) Makefile
 	@cc -c $< -o $@ $(CFLAGS)
 
 $(NAME): $(OBJS)
-	@cc $^ -o $@ $(LDFLAGS)
+	@cc $^ -o $@
 
 clean:
 	@echo "$(RED)Cleaning up...$(RESET)"
