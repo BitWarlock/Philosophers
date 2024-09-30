@@ -36,8 +36,16 @@ static int	request_forks(t_philo *philo)
 	int		right;
 	int		left;
 
-	right = philo->id;
-	left = (philo->id + 1) % philo->data->num_philos;
+	if (philo->id %2 == 0)
+	{
+		right = philo->id;
+		left = (philo->id + 1) % philo->data->num_philos;
+	}
+	else
+	{
+		left = philo->id;
+		right = (philo->id + 1) % philo->data->num_philos;
+	}
 	pthread_mutex_lock(&philo->data->forks[left].fork);
 	print_philo_action(philo, FORK);
 	if (philo->data->num_philos == 1)
@@ -52,8 +60,8 @@ static int	request_forks(t_philo *philo)
 
 static void	take_forks(t_philo *philo)
 {
-	if (philo->id % 2 != 0 && philo->meals_eaten == 0)
-		usleep_(50, philo);
+	/*if (philo->id % 2 != 0 && philo->meals_eaten == 0)*/
+	/*	usleep_(50, philo);*/
 	while (!request_forks(philo) && dinner_ongoing(philo))
 		usleep_(50, philo);
 }

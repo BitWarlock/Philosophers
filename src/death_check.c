@@ -51,29 +51,27 @@ static int	are_philos_alive(t_agora *dining_table)
 		if (philo_died(&dining_table->philo[i]))
 		{
 			print_philo_action(&dining_table->philo[i], DIE);
-			return (1);
+			return (0);
 		}
 	}
-	return (!dinner_ongoing(dining_table->philo));
+	return (dinner_ongoing(dining_table->philo));
 }
 
 static void	*death_monitor(void *arg)
 {
 	int		i;
-	int		exit_;
 	t_agora	*dining_table;
 
 	dining_table = (t_agora *)arg;
-	exit_ = 0;
 	while (1)
 	{
 		i = -1;
 		pthread_mutex_lock(&dining_table->waiter);
 		limited_meals_check(dining_table);
-		exit_ = are_philos_alive(dining_table);
+		if (!are_philos_alive(dining_table))
+			return (pthread_mutex_unlock(
+					&dining_table->waiter), NULL);
 		pthread_mutex_unlock(&dining_table->waiter);
-		if (exit_)
-			return (NULL);
 		usleep_(50, NULL);
 	}
 	return (NULL);
@@ -84,5 +82,5 @@ void	death_check(t_agora *dining_table)
 	pthread_t	death_th;
 
 	pthread_create(&death_th, NULL, death_monitor, dining_table);
-	pthread_join(death_th, NULL);
+	pthread_detach(death_th);
 }

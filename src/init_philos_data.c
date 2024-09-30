@@ -34,11 +34,12 @@ static t_mutex	*mutex_array(int size)
 
 static int	init_mutexes(t_agora *dining_table, int num_philos)
 {
-	t_mutex	*forks;
 	int		i;
 
 	i = 0;
-	forks = dining_table->forks;
+	dining_table->forks = malloc(sizeof(t_mutex) * num_philos);
+	if (!dining_table->forks)
+		return (0);
 	if (pthread_mutex_init(&dining_table->print, NULL)
 		|| pthread_mutex_init(&dining_table->waiter, NULL)
 		|| pthread_mutex_init(&dining_table->end, NULL)
@@ -46,9 +47,9 @@ static int	init_mutexes(t_agora *dining_table, int num_philos)
 		return (0);
 	while (i < num_philos)
 	{
-		if (pthread_mutex_init(&forks[i].fork, NULL))
+		if (pthread_mutex_init(&dining_table->forks[i].fork, NULL))
 			return (0);
-		forks[i].taken = 0;
+		dining_table->forks[i].taken = 0;
 		i++;
 	}
 	return (1);

@@ -46,6 +46,6 @@ void	usleep_(long long ms, t_philo *philo)
 		if (philo)
 			if (!dinner_ongoing(philo))
 				break ;
-		usleep(50);
+		usleep(100);
 	}
 }
