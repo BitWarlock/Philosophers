@@ -20,6 +20,7 @@ PURPLE			= \033[38;5;92;1m
 RESET			= \033[0m
 
 CFLAGS			= -Wall -Wextra -Werror -g -O1
+LDFLAGS			= -lpthread
 NAME			= philo
 SRCS		 	= src/main.c src/str_to_int.c src/process_input.c \
 				  src/start_dining.c src/eat.c src/death_check.c \
@@ -47,7 +48,7 @@ obj/%.o: src/%.c $(HEADER) Makefile
 	@cc -c $< -o $@ $(CFLAGS)
 
 $(NAME): $(OBJS)
-	@cc $^ -o $@
+	@cc $^ -o $@ $(LDFLAGS)
 
 clean:
 	@echo "$(RED)Cleaning up...$(RESET)"

@@ -59,13 +59,11 @@ static int	are_philos_alive(t_agora *dining_table)
 
 static void	*death_monitor(void *arg)
 {
-	int		i;
 	t_agora	*dining_table;
 
 	dining_table = (t_agora *)arg;
 	while (1)
 	{
-		i = -1;
 		pthread_mutex_lock(&dining_table->waiter);
 		limited_meals_check(dining_table);
 		if (!are_philos_alive(dining_table))

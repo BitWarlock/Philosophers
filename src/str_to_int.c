@@ -55,7 +55,8 @@ int	str_to_int(const char *str, t_errno *error)
 	}
 	while ((*str) == ' ' || ((*str) >= 9 && (*str) <= 13))
 		str++;
-	if (*str != '\0')
+	if (*str != '\0'
+		|| res == 0)
 	{
 		*error = INVALID_CHAR;
 		return (-1);

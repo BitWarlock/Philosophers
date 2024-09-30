@@ -79,10 +79,8 @@ static int	init_philos_data(t_agora *dining_table)
 
 int	init_dining_table(t_agora *dining_table)
 {
-	int	i;
 	int	num_philos;
 
-	i = 0;
 	num_philos = dining_table->num_philos;
 	dining_table->philo = t_philo_array(num_philos);
 	dining_table->forks = mutex_array(num_philos);
