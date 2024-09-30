@@ -61,7 +61,7 @@ static int	request_forks(t_philo *philo)
 static void	take_forks(t_philo *philo)
 {
 	/*if (philo->id % 2 != 0 && philo->meals_eaten == 0)*/
-	/*	usleep_(50, philo);*/
+		usleep_(philo->data->num_philos, philo);
 	while (!request_forks(philo) && dinner_ongoing(philo))
 		usleep_(50, philo);
 }
