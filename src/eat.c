@@ -12,15 +12,12 @@
 
 #include "../include/philosophers.h"
 
-static void	put_forks(t_philo *philo)
+static void	put_forks(t_philo *philo, int first_fork, int second_fork)
 {
-	int		right;
-	int		left;
-
-	right = philo->id;
-	left = (philo->id + 1) % philo->data->num_philos;
-	pthread_mutex_unlock(&philo->data->forks[left].fork);
-	pthread_mutex_unlock(&philo->data->forks[right].fork);
+	pthread_mutex_unlock(&philo->data
+		->forks[first_fork].fork);
+	pthread_mutex_unlock(&philo->data
+		->forks[second_fork].fork);
 }
 
 static int	sleep_one(t_philo *philo)
@@ -31,49 +28,44 @@ static int	sleep_one(t_philo *philo)
 	return (1);
 }
 
-static int	request_forks(t_philo *philo)
+static int	request_forks(t_philo *philo, int first_fork, int second_fork)
 {
-	int		right;
-	int		left;
-
-	if (philo->id %2 == 0)
-	{
-		right = philo->id;
-		left = (philo->id + 1) % philo->data->num_philos;
-	}
-	else
-	{
-		left = philo->id;
-		right = (philo->id + 1) % philo->data->num_philos;
-	}
-	pthread_mutex_lock(&philo->data->forks[left].fork);
+	pthread_mutex_lock(&philo->data->forks[first_fork].fork);
 	print_philo_action(philo, FORK);
 	if (philo->data->num_philos == 1)
 		sleep_one(philo);
 	if (!dinner_ongoing(philo))
-		return (1);
-	pthread_mutex_lock(&philo->data->forks[right].fork);
+		return (pthread_mutex_unlock(
+				&philo->data->forks[first_fork].fork), 1);
+	pthread_mutex_lock(&philo->data->forks[second_fork].fork);
 	philo->last_meal = get_time_in_mc();
 	print_philo_action(philo, FORK);
 	return (1);
 }
 
-static void	take_forks(t_philo *philo)
+static void	take_forks(t_philo *philo, int first, int second)
 {
-	/*if (philo->id % 2 != 0 && philo->meals_eaten == 0)*/
-		usleep_(philo->data->num_philos, philo);
-	while (!request_forks(philo) && dinner_ongoing(philo))
-		usleep_(50, philo);
+	pthread_mutex_lock(&philo->data->meals);
+	usleep_(philo->data->num_philos, philo);
+	pthread_mutex_unlock(&philo->data->meals);
+	while (!request_forks(philo, first, second)
+		&& dinner_ongoing(philo))
+		usleep_(100, philo);
 }
 
 void	eat(t_philo *philo)
 {
+	int		second;
+	int		first;
+
 	if (!dinner_ongoing(philo)
 		|| philo->is_full)
 		return ;
-	take_forks(philo);
+	forks_priority(&first, &second,
+		philo->id, philo->data->num_philos);
+	take_forks(philo, first, second);
 	print_philo_action(philo, EAT);
 	usleep_(philo->data->time_eat, philo);
 	philo->meals_eaten++;
-	put_forks(philo);
+	put_forks(philo, first, second);
 }

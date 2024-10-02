@@ -40,3 +40,17 @@ void	limited_meals_check(t_agora *dining_table)
 	}
 	pthread_mutex_unlock(&dining_table->meals);
 }
+
+void	forks_priority(int *first, int *second, int id, int num_philos)
+{
+	if (id % 2 == 0)
+	{
+		*second = id;
+		*first = (id + 1) % num_philos;
+	}
+	else
+	{
+		*first = id;
+		*second = (id + 1) % num_philos;
+	}
+}

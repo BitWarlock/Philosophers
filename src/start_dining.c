@@ -14,11 +14,16 @@
 
 static void	think(t_philo *philo)
 {
+	if (!dinner_ongoing(philo))
+		return ;
 	print_philo_action(philo, THINK);
+	usleep_(philo->data->num_philos, philo);
 }
 
 static void	sleep_(t_philo *philo)
 {
+	if (!dinner_ongoing(philo))
+		return ;
 	print_philo_action(philo, SLEEP);
 	usleep_(philo->data->time_sleep, philo);
 }

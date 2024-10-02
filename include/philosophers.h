@@ -83,6 +83,7 @@ typedef struct s_agora
 long long	get_time_in_mc(void);
 long long	get_time_in_ms(void);
 
+void		forks_priority(int *first, int *second, int id, int num_philos);
 void		print_philo_action(t_philo *philo, t_action action);
 void		limited_meals_check(t_agora *dining_table);
 void		meals_count(t_agora *dining_table, int id);
