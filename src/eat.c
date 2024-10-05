@@ -45,9 +45,6 @@ static int	request_forks(t_philo *philo, int first_fork, int second_fork)
 
 static void	take_forks(t_philo *philo, int first, int second)
 {
-	pthread_mutex_lock(&philo->data->meals);
-	usleep_(philo->data->num_philos, philo);
-	pthread_mutex_unlock(&philo->data->meals);
 	while (!request_forks(philo, first, second)
 		&& dinner_ongoing(philo))
 		usleep_(100, philo);
@@ -61,8 +58,12 @@ void	eat(t_philo *philo)
 	if (!dinner_ongoing(philo)
 		|| philo->is_full)
 		return ;
+	pthread_mutex_lock(&philo->data->waiter);
+	if (philo->id % 2 == 0)
+		usleep_(philo->data->time_eat / 2000, philo);
 	forks_priority(&first, &second,
 		philo->id, philo->data->num_philos);
+	pthread_mutex_unlock(&philo->data->waiter);
 	take_forks(philo, first, second);
 	print_philo_action(philo, EAT);
 	usleep_(philo->data->time_eat, philo);

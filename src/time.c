@@ -30,13 +30,13 @@ long long	get_time_in_ms(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	usleep_(long long ms, t_philo *philo)
+void	usleep_(long long mc, t_philo *philo)
 {
 	long long	start;
 	long long	end;
 
 	start = get_time_in_mc();
-	end = start + ms;
+	end = start + mc;
 	while (1)
 	{
 		start = get_time_in_mc();

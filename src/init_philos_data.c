@@ -22,16 +22,6 @@ static t_philo	*t_philo_array(int size)
 	return (arr);
 }
 
-static t_mutex	*mutex_array(int size)
-{
-	t_mutex	*arr;
-
-	arr = malloc(sizeof(pthread_mutex_t) * size);
-	if (!arr)
-		return (NULL);
-	return (arr);
-}
-
 static int	init_mutexes(t_agora *dining_table, int num_philos)
 {
 	int		i;
@@ -83,7 +73,6 @@ int	init_dining_table(t_agora *dining_table)
 
 	num_philos = dining_table->num_philos;
 	dining_table->philo = t_philo_array(num_philos);
-	dining_table->forks = mutex_array(num_philos);
 	if (!dining_table->forks
 		|| !dining_table->philo)
 		return (perror("malloc"), 0);

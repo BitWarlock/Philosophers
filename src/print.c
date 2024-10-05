@@ -15,12 +15,12 @@
 void	print_error(t_errno error)
 {
 	if (error == WRONG_USAGE)
-		printf("Error: Wrong usage.\nUsage: ./philo number_of_philosophers"
-			"time_to_die time_to_eat time_to_sleep number_of_meals\n");
+		printf("Error: Wrong usage.\tUsage:\n./philo number_of_philosophers"
+			" time_to_die time_to_eat time_to_sleep number_of_meals.\n");
 	if (error == INVALID_CHAR)
-		printf("Error: Invalid character. Only numeric input is allowed\n");
+		printf("Error: Invalid character. Only numeric input is allowed.\n");
 	if (error == NEGATIVE_NUM)
-		printf("Error: Only positive numbers are allowed\n");
+		printf("Error: Only positive non-zero integers are allowed.\n");
 	if (error == BIG_NUM)
 		printf("Error: Number exceeds INT_MAX.\n");
 }

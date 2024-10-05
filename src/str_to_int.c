@@ -36,6 +36,23 @@ static int	skip_spaces_plus(const char **str, t_errno *error)
 	return (1);
 }
 
+int	check_errors(const char *str, t_errno *error, int res)
+{
+	while ((*str) == ' ' || ((*str) >= 9 && (*str) <= 13))
+		str++;
+	if (*str != '\0')
+	{
+		*error = INVALID_CHAR;
+		return (-1);
+	}
+	if (res == 0)
+	{
+		*error = NEGATIVE_NUM;
+		return (-1);
+	}
+	return (res);
+}
+
 int	str_to_int(const char *str, t_errno *error)
 {
 	long	res;
@@ -53,13 +70,5 @@ int	str_to_int(const char *str, t_errno *error)
 		}
 		str++;
 	}
-	while ((*str) == ' ' || ((*str) >= 9 && (*str) <= 13))
-		str++;
-	if (*str != '\0'
-		|| res == 0)
-	{
-		*error = INVALID_CHAR;
-		return (-1);
-	}
-	return (res);
+	return (check_errors(str, error, res));
 }
