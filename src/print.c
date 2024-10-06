@@ -23,6 +23,8 @@ void	print_error(t_errno error)
 		printf("Error: Only positive non-zero integers are allowed.\n");
 	if (error == BIG_NUM)
 		printf("Error: Number exceeds INT_MAX.\n");
+	if (error == PTHREAD)
+		printf("Error: pthread function failed.\n");
 }
 
 void	print_philo_action(t_philo *philo, t_action action)

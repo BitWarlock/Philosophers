@@ -39,7 +39,8 @@ typedef enum s_errno
 	WRONG_USAGE,
 	NEGATIVE_NUM,
 	BIG_NUM,
-	INVALID_CHAR
+	INVALID_CHAR,
+	PTHREAD
 }			t_errno;
 
 typedef struct s_mutex

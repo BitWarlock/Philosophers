@@ -28,11 +28,8 @@ static void	sleep_(t_philo *philo)
 	usleep_(philo->data->time_sleep, philo);
 }
 
-static void	*dinner_table(void *arg)
+static void	*dinner_table(t_philo *philo)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *)arg;
 	while (dinner_ongoing(philo))
 	{
 		eat(philo);
@@ -48,7 +45,8 @@ static void	join_threads(t_philo *philos)
 
 	i = -1;
 	while (++i < philos->data->num_philos)
-		pthread_join(philos[i].philosopher, NULL);
+		if (pthread_join(philos[i].philosopher, NULL))
+			return (print_error(PTHREAD));
 }
 
 void	start_dining(t_agora *dining_table)
@@ -58,8 +56,9 @@ void	start_dining(t_agora *dining_table)
 	i = -1;
 	dining_table->end_dinner = 0;
 	while (++i < dining_table->num_philos)
-		pthread_create(&dining_table->philo[i].philosopher, NULL,
-			dinner_table, &dining_table->philo[i]);
+		if (pthread_create(&dining_table->philo[i].philosopher, NULL,
+			(void *)dinner_table, &dining_table->philo[i]))
+			return (print_error(PTHREAD));
 	death_check(dining_table);
 	join_threads(dining_table->philo);
 }
