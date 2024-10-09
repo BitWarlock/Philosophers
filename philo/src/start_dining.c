@@ -57,7 +57,7 @@ void	start_dining(t_agora *dining_table)
 	dining_table->end_dinner = 0;
 	while (++i < dining_table->num_philos)
 		if (pthread_create(&dining_table->philo[i].philosopher, NULL,
-			(void *)dinner_table, &dining_table->philo[i]))
+				(void *)dinner_table, &dining_table->philo[i]))
 			return (print_error(PTHREAD));
 	death_check(dining_table);
 	join_threads(dining_table->philo);

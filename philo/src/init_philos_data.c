@@ -75,12 +75,12 @@ int	init_dining_table(t_agora *dining_table)
 	dining_table->philo = t_philo_array(num_philos);
 	if (!dining_table->forks
 		|| !dining_table->philo)
-		return (perror("malloc"), 0);
+		return (0);
 	if (!dining_table->philo || !dining_table->forks)
-		return (perror("malloc"), 0);
+		return (0);
 	if (!init_mutexes(dining_table, num_philos))
-		return (perror("mutex"), 0);
+		return (0);
 	if (!init_philos_data(dining_table))
-		return (perror("gettimeofday"), 0);
+		return (0);
 	return (1);
 }
