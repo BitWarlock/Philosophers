@@ -34,11 +34,11 @@ static int	init_mutexes(t_agora *dining_table, int num_philos)
 		|| pthread_mutex_init(&dining_table->waiter, NULL)
 		|| pthread_mutex_init(&dining_table->end, NULL)
 		|| pthread_mutex_init(&dining_table->meals, NULL))
-		return (0);
+		return (print_error(MUTEX_I), 0);
 	while (i < num_philos)
 	{
 		if (pthread_mutex_init(&dining_table->forks[i].fork, NULL))
-			return (0);
+			return (print_error(MUTEX_I), 0);
 		dining_table->forks[i].taken = 0;
 		i++;
 	}
@@ -73,12 +73,8 @@ int	init_dining_table(t_agora *dining_table)
 
 	num_philos = dining_table->num_philos;
 	dining_table->philo = t_philo_array(num_philos);
-	if (!dining_table->forks
-		|| !dining_table->philo)
-		return (0);
-	if (!dining_table->philo || !dining_table->forks)
-		return (0);
-	if (!init_mutexes(dining_table, num_philos))
+	if (!dining_table->philo
+		|| !init_mutexes(dining_table, num_philos))
 		return (0);
 	if (!init_philos_data(dining_table))
 		return (0);

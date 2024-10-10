@@ -19,21 +19,28 @@ void	cleanup(t_agora *dining_table)
 	i = 0;
 	while (i < dining_table->num_philos)
 	{
-		pthread_mutex_destroy(&dining_table->forks[i].fork);
+		if (pthread_mutex_destroy(&dining_table->forks[i].fork))
+			return (print_error(THREAD_D));
 		i++;
 	}
-	pthread_mutex_destroy(&dining_table->print);
-	pthread_mutex_destroy(&dining_table->meals);
-	pthread_mutex_destroy(&dining_table->waiter);
-	pthread_mutex_destroy(&dining_table->end);
+	if (pthread_mutex_destroy(&dining_table->print)
+		|| pthread_mutex_destroy(&dining_table->meals)
+		|| pthread_mutex_destroy(&dining_table->waiter)
+		|| pthread_mutex_destroy(&dining_table->end))
+		return (print_error(THREAD_D));
 	free(dining_table->forks);
 	free(dining_table->philo);
 }
 
+void f()
+{
+	system ("leaks philo");
+}
 int	main(int argc, char *argv[])
 {
 	t_agora	dining_table;
 
+	/*atexit(f);*/
 	if (!process_input(argc, argv, &dining_table))
 		return (print_error(dining_table.error), EXIT_FAILURE);
 	if (!init_dining_table(&dining_table))

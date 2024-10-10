@@ -12,7 +12,7 @@
 
 #include "../include/philosophers.h"
 
-static int	ft_isdigit(int c)
+static int	_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }
@@ -26,7 +26,7 @@ static int	skip_spaces_plus(const char **str, t_errno *error)
 		*error = NEGATIVE_NUM;
 		return (0);
 	}
-	if (!ft_isdigit(*(*str)) && *(*str) != '+')
+	if (!_isdigit(*(*str)) && *(*str) != '+')
 	{
 		*error = INVALID_CHAR;
 		return (0);
@@ -60,7 +60,7 @@ int	str_to_int(const char *str, t_errno *error)
 	res = 0;
 	if (!skip_spaces_plus(&str, error))
 		return (-1);
-	while (ft_isdigit(*str))
+	while (_isdigit(*str))
 	{
 		res = res * 10 + (*str - '0');
 		if (res > INT_MAX)

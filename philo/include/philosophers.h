@@ -14,7 +14,6 @@
 
 # define PHILOSOPHERS_H
 
-# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <limits.h>
@@ -40,7 +39,13 @@ typedef enum s_errno
 	NEGATIVE_NUM,
 	BIG_NUM,
 	INVALID_CHAR,
-	PTHREAD
+	THREAD_D,
+	THREAD_J,
+	THREAD_C,
+	MUTEX_L,
+	MUTEX_U,
+	MUTEX_D,
+	MUTEX_I
 }			t_errno;
 
 typedef struct s_mutex

@@ -46,7 +46,7 @@ static void	join_threads(t_philo *philos)
 	i = -1;
 	while (++i < philos->data->num_philos)
 		if (pthread_join(philos[i].philosopher, NULL))
-			return (print_error(PTHREAD));
+			return (print_error(THREAD_J));
 }
 
 void	start_dining(t_agora *dining_table)
@@ -58,7 +58,7 @@ void	start_dining(t_agora *dining_table)
 	while (++i < dining_table->num_philos)
 		if (pthread_create(&dining_table->philo[i].philosopher, NULL,
 				(void *)dinner_table, &dining_table->philo[i]))
-			return (print_error(PTHREAD));
+			return (print_error(THREAD_C));
 	death_check(dining_table);
 	join_threads(dining_table->philo);
 }

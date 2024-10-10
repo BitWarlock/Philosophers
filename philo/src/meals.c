@@ -14,7 +14,8 @@
 
 void	meals_count(t_agora *dining_table, int id)
 {
-	pthread_mutex_lock(&dining_table->meals);
+	if (pthread_mutex_lock(&dining_table->meals))
+		return (print_error(MUTEX_L));
 	if (dining_table->limited_meals
 		&& !dining_table->philo[id].is_full)
 	{
@@ -24,12 +25,14 @@ void	meals_count(t_agora *dining_table, int id)
 			dining_table->philo_meal_count++;
 		}
 	}
-	pthread_mutex_unlock(&dining_table->meals);
+	if (pthread_mutex_unlock(&dining_table->meals))
+		return (print_error(MUTEX_U));
 }
 
 void	limited_meals_check(t_agora *dining_table)
 {
-	pthread_mutex_lock(&dining_table->meals);
+	if (pthread_mutex_lock(&dining_table->meals))
+		return (print_error(MUTEX_L));
 	if (dining_table->limited_meals)
 	{
 		if (dining_table->philo_meal_count == dining_table->num_philos)
@@ -38,7 +41,8 @@ void	limited_meals_check(t_agora *dining_table)
 			dining_table->philos_fed = 1;
 		}
 	}
-	pthread_mutex_unlock(&dining_table->meals);
+	if (pthread_mutex_unlock(&dining_table->meals))
+		return (print_error(MUTEX_U));
 }
 
 void	forks_priority(int *first, int *second, int id, int num_philos)

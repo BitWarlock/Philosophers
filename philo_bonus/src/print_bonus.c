@@ -34,19 +34,19 @@ void	print_philo_action(t_agora *philo, t_action action)
 {
 	sem_wait(philo->print);
 	if (action == THINK)
-		printf("\033[40;37m%lld\033[0m\t%d \033[95mis thinking\033[0m\n",
+		printf("\033[40;37m%lld\033[0m\t%d\t\033[95mis thinking\033[0m\n",
 			get_time_in_ms() - philo->start_time, philo->id + 1);
 	if (action == FORK)
-		printf("\033[40;37m%lld\033[0m\t%d \033[96mhas taken a fork\033[0m\n",
+		printf("\033[40;37m%lld\033[0m\t%d\t\033[96mhas taken a fork\033[0m\n",
 			get_time_in_ms() - philo->start_time, philo->id + 1);
 	if (action == SLEEP)
-		printf("\033[40;37m%lld\033[0m\t%d \033[93mis sleeping\033[0m\n",
+		printf("\033[40;37m%lld\033[0m\t%d\t\033[93mis sleeping\033[0m\n",
 			get_time_in_ms() - philo->start_time, philo->id + 1);
 	if (action == EAT)
-		printf("\033[40;37m%lld\033[0m\t%d \033[92mis eating\033[0m\n",
+		printf("\033[40;37m%lld\033[0m\t%d\t\033[92mis eating\033[0m\n",
 			get_time_in_ms() - philo->start_time, philo->id + 1);
 	if (action == DIE)
-		printf("\033[31m%lld\t%d died\033[0m\n",
+		printf("\033[31m%lld\t%d\tdied\033[0m\n",
 			get_time_in_ms() - philo->start_time, philo->id + 1);
 	if (action != DIE)
 		sem_post(philo->print);
