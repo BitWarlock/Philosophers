@@ -23,6 +23,7 @@ static void	put_forks(t_philo *philo, int first_fork, int second_fork)
 
 static int	sleep_one(t_philo *philo)
 {
+	print_philo_action(philo, SLEEP);
 	usleep_(philo->data->time_die, philo);
 	philo->data->end_dinner = 1;
 	if (pthread_mutex_unlock(philo->fork))

@@ -44,7 +44,9 @@ void	start_monitoring(t_agora *philo, int id)
 {
 	philo->id = id;
 	philo->last_meal = get_time_in_mc();
-	philo->start_time = get_time_in_ms();
-	pthread_create(&philo->ripper, NULL, (void *)ripper_routine, philo);
-	pthread_detach(philo->ripper);
+	if (philo->last_meal < 0)
+		return ((void)printf("Error: gettimeofday failed\n"));
+	if (pthread_create(&philo->ripper, NULL, (void *)ripper_routine, philo)
+		|| pthread_detach(philo->ripper))
+		return (print_error(PTHREAD));
 }

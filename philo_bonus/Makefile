@@ -20,10 +20,10 @@ PURPLE			= \033[38;5;92;1m
 RESET			= \033[0m
 CFLAGS			= -g #-Wall -Wextra -Werror -g -O1
 LDFLAGS			= -lpthread
-NAME			= philo
+NAME			= philo_bonus
 SRCS		 	= src/main_bonus.c src/str_to_int_bonus.c src/process_input_bonus.c \
 				  src/init_philos_data_bonus.c src/time_bonus.c src/print_bonus.c \
-				  src/start_dining_bonus.c src/actions_bonus.c src/monitor_bonus.c
+				  src/start_dining_bonus.c src/dinner_table_bonus.c src/monitor_bonus.c
 OBJS		 	= $(SRCS:src/%.c=obj/%.o)
 HEADER 			= include/philosophers_bonus.h
 

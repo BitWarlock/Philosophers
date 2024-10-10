@@ -46,8 +46,7 @@ void	print_philo_action(t_agora *philo, t_action action)
 		printf("\033[40;37m%lld\033[0m\t%d\t\033[92mis eating\033[0m\n",
 			get_time_in_ms() - philo->start_time, philo->id + 1);
 	if (action == DIE)
-		printf("\033[31m%lld\t%d\tdied\033[0m\n",
-			get_time_in_ms() - philo->start_time, philo->id + 1);
-	if (action != DIE)
-		sem_post(philo->print);
+		return ((void)printf("\033[31m%lld\t%d\tdied\033[0m\n",
+				get_time_in_ms() - philo->start_time, philo->id + 1));
+	sem_post(philo->print);
 }

@@ -14,12 +14,13 @@
 
 static void	cleanup(t_agora *table)
 {
-	sem_close(table->waiter);
-	sem_close(table->print);
-	sem_close(table->forks);
-	sem_unlink("/waiter");
-	sem_unlink("/forks");
-	sem_unlink("/print");
+	if (sem_close(table->waiter) < 0
+		|| sem_close(table->print) < 0
+		|| sem_close(table->forks) < 0
+		|| sem_unlink("/waiter") < 0
+		|| sem_unlink("/forks") < 0
+		|| sem_unlink("/print") < 0)
+		return ((void)printf("Error: sem failed\n"));
 	free(table->pids);
 }
 

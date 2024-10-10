@@ -41,6 +41,7 @@ void	start_dining(t_agora *table)
 	table->pids = malloc(sizeof(pid_t) * table->num_philos);
 	if (!table->pids)
 		return ((void)printf("Error: malloc failed\n"));
+	table->start_time = get_time_in_ms();
 	while (i < table->num_philos)
 	{
 		table->pids[i] = fork();

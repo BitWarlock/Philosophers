@@ -26,12 +26,17 @@ static void	sleep_(t_agora *philo)
 
 static void	take_forks(t_agora *philo)
 {
-	sem_wait(philo->waiter);
-	sem_wait(philo->forks);
+	if (sem_wait(philo->waiter) < 0
+		|| sem_wait(philo->forks) < 0)
+		return ((void)printf("Error: sem_wait failed"));
 	print_philo_action(philo, FORK);
-	sem_wait(philo->forks);
+	if (philo->num_philos == 1)
+		sleep_(philo);
+	if (sem_wait(philo->forks) < 0)
+		return ((void)printf("Error: sem_wait failed"));
 	print_philo_action(philo, FORK);
-	sem_post(philo->waiter);
+	if (sem_post(philo->waiter) < 0)
+		return ((void)printf("Error: sem_post failed"));
 }
 
 static void	eat(t_agora *philo)
@@ -41,8 +46,9 @@ static void	eat(t_agora *philo)
 	philo->meals_count++;
 	print_philo_action(philo, EAT);
 	usleep_(philo->time_eat, philo);
-	sem_post(philo->forks);
-	sem_post(philo->forks);
+	if (sem_post(philo->forks) < 0
+		|| sem_post(philo->forks) < 0)
+		return ((void)printf("Error: sem_post failed"));
 }
 
 void	dinner_table(t_agora *philo, int id)

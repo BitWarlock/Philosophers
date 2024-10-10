@@ -15,11 +15,11 @@
 static int	init_semaphores(t_agora *table, int num_philos)
 {
 	sem_unlink("/waiter");
-	sem_unlink("/print");
 	sem_unlink("/forks");
+	sem_unlink("/print");
 	table->forks = sem_open("/forks", O_CREAT, 0600, num_philos);
 	table->print = sem_open("/print", O_CREAT, 0600, 1);
-	table->waiter = sem_open("/waiter", O_CREAT, 0600, num_philos);
+	table->waiter = sem_open("/waiter", O_CREAT, 0600, 1);
 	if (table->waiter == SEM_FAILED
 		|| table->print == SEM_FAILED
 		|| table->forks == SEM_FAILED)

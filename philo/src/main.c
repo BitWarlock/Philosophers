@@ -32,15 +32,10 @@ void	cleanup(t_agora *dining_table)
 	free(dining_table->philo);
 }
 
-void f()
-{
-	system ("leaks philo");
-}
 int	main(int argc, char *argv[])
 {
 	t_agora	dining_table;
 
-	/*atexit(f);*/
 	if (!process_input(argc, argv, &dining_table))
 		return (print_error(dining_table.error), EXIT_FAILURE);
 	if (!init_dining_table(&dining_table))
