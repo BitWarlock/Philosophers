@@ -18,7 +18,7 @@ GREEN			= \033[92m
 NEON			= \033[38;5;51m
 PURPLE			= \033[38;5;92;1m
 RESET			= \033[0m
-CFLAGS			= -g #-Wall -Wextra -Werror -g -O1
+CFLAGS			= -Wall -Wextra -Werror -g -O1
 LDFLAGS			= -lpthread
 NAME			= philo_bonus
 SRCS		 	= src/main_bonus.c src/str_to_int_bonus.c src/process_input_bonus.c \
@@ -59,4 +59,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: check
+.PHONY: clean fclean
